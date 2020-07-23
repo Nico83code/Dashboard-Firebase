@@ -20,8 +20,9 @@ const CreateProject = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("postForm", postForm);
+    // console.log("postForm", postForm);
     props.createProject(postForm);
+    props.history.push("/");
   };
 
   const { auth } = props;
