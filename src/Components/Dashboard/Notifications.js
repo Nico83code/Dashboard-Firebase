@@ -19,8 +19,8 @@ const Notifications = (props) => {
                       {moment(item.time.toDate()).fromNow()}
                     </div>
                   </li>
-                );
-              })}
+               
+              )})}
           </ul>
         </div>
       </div>
