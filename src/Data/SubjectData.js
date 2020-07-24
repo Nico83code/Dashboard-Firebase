@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Chart from "../Components/Dashboard/Chart";
 import AverageRating from "../Components/Dashboard/AverageRating";
-
 
 function SubjectData() {
   const apiUrl = "https://dashboard-e5b12.firebaseio.com/subDB.json";
@@ -24,12 +22,6 @@ function SubjectData() {
     getSubData(event);
   }, []);
 
-  return (
-    <div>
-      {subData ? <Chart data={subData} /> : null}
-      {subData ? <AverageRating data={subData} /> : null}
-
-    </div>
-  );
+  return <div>{subData ? <AverageRating data={subData} /> : null}</div>;
 }
 export default SubjectData;

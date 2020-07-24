@@ -11,6 +11,9 @@ function SignedInLinks(props) {
           <NavLink to="/">Overview</NavLink>
         </li>
         <li>
+          <NavLink to="/listoverview">List Overview</NavLink>
+        </li>
+        <li>
           <NavLink to="/dashboard">Notifications</NavLink>
         </li>
         <li>
