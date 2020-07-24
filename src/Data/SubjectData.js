@@ -1,9 +1,11 @@
-// import React, { useEffect, useState } from "react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Chart from "../Components/Dashboard/Chart";
+import AverageRating from "../Components/Dashboard/AverageRating";
+
 
 function SubjectData() {
-  const apiUrl = "https://studentsubdb.firebaseio.com/subjectData.json";
-  // const [subData, setSubData] = useState([]);
+  const apiUrl = "https://dashboard-e5b12.firebaseio.com/subDB.json";
+  const [subData, setSubData] = useState();
 
   const getSubData = async () => {
     try {
@@ -11,19 +13,8 @@ function SubjectData() {
         method: "GET",
       });
       const result = await response.json();
-
-      // let song = Object.keys(result).map((key) => ({
-      //   id: key,
-      //   artist: result[key].artist,
-      //   genre: result[key].genre,
-      //   rating: result[key].rating,
-      //   title: result[key].title,
-      // }));
-
-      // setSubData(song);
-      // return song;
-      console.log(result);
-      return result;
+      setSubData(result);
+      // return result;
     } catch (error) {
       console.log(error);
     }
@@ -33,6 +24,12 @@ function SubjectData() {
     getSubData(event);
   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      {subData ? <Chart data={subData} /> : null}
+      {subData ? <AverageRating data={subData} /> : null}
+
+    </div>
+  );
 }
 export default SubjectData;

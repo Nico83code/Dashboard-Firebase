@@ -7,7 +7,6 @@ import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 
 const Dashboard = (props) => {
-  console.log(props);
   const { projects, auth, notifications } = props;
   if (!auth.uid) return <Redirect to="/signin" />;
   return (
