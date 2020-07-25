@@ -9,6 +9,8 @@ import CreateProject from "./Components/Projects/CreateProject";
 import DashboardOverview from "./Components/Dashboard/DashboardOverview";
 import Profile from "./Components/Dashboard/Profile";
 import ListOverview from "./Components/ListView/ListOverview";
+import StudentDetail from "./Components/Student/StudentDetail";
+import Students from "./Components/Student/Students";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route exact path="/" component={DashboardOverview} />
           <Route path="/listoverview" component={ListOverview} />
           <Route path="/profile" component={Profile} />
+          <Route path="/Students" exact component={Students} />
+          <Route path="/Students/:id" component={StudentDetail} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/project/:id" component={ProjectDetails} />
           <Route path="/signin" component={SignIn} />

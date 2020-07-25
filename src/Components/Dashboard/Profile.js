@@ -2,8 +2,12 @@ import React from "react";
 
 function Profile() {
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className="dbcontainer">
+      <div className="card z-depth-0">
+        <div className="card-content">
+          <span className="card-title">Profile</span>
+        </div>
+      </div>
     </div>
   );
 }

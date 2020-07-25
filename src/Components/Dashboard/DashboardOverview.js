@@ -1,6 +1,7 @@
 import React from "react";
 import "../../App.css";
 import SubjectData from "../../Data/SubjectData";
+import Students from "../Student/Students";
 
 function DashboardOverview() {
   return (
@@ -9,6 +10,7 @@ function DashboardOverview() {
         <div className="card-content">
           <span className="card-title">Dashboard Overview</span>
           <SubjectData/>
+          <Students/>
         </div>
       </div>
     </div>

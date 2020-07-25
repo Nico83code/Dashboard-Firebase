@@ -6,44 +6,100 @@ import {
   VictoryGroup,
   VictoryTooltip,
   VictoryLabel,
+  VictoryLine,
 } from "victory";
 
 function AverageRating(props) {
-  const [fetchData, setFetchData] = useState(props.data);
+  const [data, setData] = useState(props.data);
+  const [toggleTrueFales, setToggleTrueFales] = useState(true);
+  const [filterDifficulty, setFilterDifficulty] = useState("");
+  const [filterEnjoymentRate, setFilterEnjoymentRate] = useState("");
+  const [filterChart, setFilterChart] = useState("");
 
-  const getAssignmentNames = () => {
-    const studentData = fetchData;
-    let assignments = [];
-    const map = new Map();
-    for (const item of studentData) {
-      if (!map.has(item.assignment)) {
-        map.set(item.assignment, true);
-        assignments.push({ assignment: item.assignment });
-      }
-    }
-    return assignments;
+  // 1. All Assignments in Array
+  const allAssignments = data.map((data) => data.assignment);
+  const filterAssignmentName = [...new Set(allAssignments)];
+
+  // 2. Object of items
+  const objectStateData = data.map((object) => ({
+    Name: object.name,
+    Assignment: object.assignment,
+    DifficultyRate: parseInt(object.difficultyRating), // The parseInt() function parses a string argument and returns an integer of the specified radix
+    EnjoymentRate: parseInt(object.enjoymentRating),
+  }));
+
+  // 3. Function result FUN and Difficulty
+  const getAverageResult = (assignment, typeOfResult) => {
+    const filterData = objectStateData
+      .filter((item) => item.Assignment === assignment)
+      .map((result) => result[typeOfResult]);
+    // Average
+    const averageResult =
+      filterData.reduce((a, b) => a + b, 0) / filterData.length; // ex. const arrAvg = arr => arr.reduce((a,b) => a + b, 0) / arr.length
+    return averageResult;
   };
-console.log(getAssignmentNames())
 
+  //4. Data with Average result
+  const allStudentsRatingAverage = filterAssignmentName.map((assignment) => ({
+    Assignment: assignment,
+    DifficultyRate: getAverageResult(assignment, "DifficultyRate"),
+    EnjoymentRate: getAverageResult(assignment, "EnjoymentRate"),
+  }));
 
-  const handleChange = (event, chartSwitch) => {
+  console.log(allStudentsRatingAverage);
+
+  const toggle = () => {
+    setToggleTrueFales(!toggleTrueFales);
+  };
+
+  const handleChangeDifficultyRate = (event) => {
     event.preventDefault();
+    toggle();
     console.log("click");
-
+    console.log(event);
+    console.log(event.target.id);
   };
+  const handleChangeEnjoymentRate = (event) => {
+    event.preventDefault();
+    toggle();
+    console.log("click");
+  };
+  const handleChangeChart = (event) => {
+    event.preventDefault();
+    toggle();
+    console.log("click");
+  };
+
+  // const newArray =
+  //   filterDifficulty === "all"
+  //     ? //filter name
+  //       allStudentsRatingAverage
+  //     : filterDifficulty === "Helena"
+  //     ? allStudentsRatingAverage.filter((data) => data.name === "Helena")
+  //     : allStudentsRatingAverage;
 
   return (
     <div>
       <div>
-        <button onClick={(event) => handleChange(event, true)}>
-          Difficulty Rating <span>on</span> : <span>off</span>
+        <button
+          id="DifficultyRate"
+          value="DifficultyRate"
+          onClick={(event) => handleChangeDifficultyRate(event)}
+        >
+          Difficulty Rating |{" "}
+          {toggleTrueFales ? <span>On</span> : <span>Off</span>}
         </button>
 
-        <button onClick={(event) => handleChange(event, false)}>
-          EnjoymentRating <span>on</span> : <span>off</span>
+        <button
+          id="EnjoymentRate"
+          value="EnjoymentRate"
+          onClick={(event) => handleChangeEnjoymentRate(event, false)}
+        >
+          EnjoymentRating |{" "}
+          {toggleTrueFales ? <span>On</span> : <span>Off</span>}
         </button>
-        <button onClick={(event) => handleChange(event, "")}>
-          Chart <span>on</span> : <span>off</span>
+        <button onClick={(event) => handleChangeChart(event, "")}>
+          Chart | {toggleTrueFales ? <span>On</span> : <span>Off</span>}
         </button>
       </div>
       <h2>Average Rating</h2>
@@ -55,80 +111,59 @@ console.log(getAssignmentNames())
       >
         <VictoryGroup offset={8}>
           <VictoryBar
+            id="DifficultyRateBar"
+            value="true"
             labelComponent={<VictoryTooltip />}
-            data={fetchData}
-            x="assignment"
-            y="difficultyRating"
-            tickValues={[1, 2, 3, 4, 5]}
-            alignment="start"
-            color="#f2ba0d"
+            data={allStudentsRatingAverage}
+            x="Assignment"
+            y="DifficultyRate"
+            style={{ data: { fill: "#f2ba0d" } }}
           />
 
           <VictoryBar
+            id="EnjoymentRateBar"
+            value="true"
             labelComponent={<VictoryTooltip />}
-            data={fetchData}
-            x="assignment"
-            y="enjoymentRating"
-            tickValues={[1, 2, 3, 4, 5]}
-            alignment="start"
-            color="#F27F0D"
+            data={allStudentsRatingAverage}
+            x="Assignment"
+            y="EnjoymentRate"
+            style={{ data: { fill: "#F27F0D" } }}
           />
         </VictoryGroup>
         <VictoryAxis
-          tickValues={[1, 2, 3, 4, 5]}
-          tickFormat={props.assignment}
           tickLabelComponent={<VictoryLabel angle={40} textAnchor="start" />}
         />
         <VictoryAxis dependentAxis />
       </VictoryChart>
-
-      <h2>Difficulty Rating</h2>
+      //line chart
       <VictoryChart
         domainPadding={6}
         width={1200}
         height={400}
         padding={{ top: 20, bottom: 160, left: 60, right: 150 }}
       >
-        <VictoryGroup offset={8}>
-          <VictoryBar
-            labelComponent={<VictoryTooltip />}
-            data={fetchData}
-            x="assignment"
-            y="difficultyRating"
-            tickValues={[1, 2, 3, 4, 5]}
-            alignment="start"
-            color="#f2ba0d"
-          />
-        </VictoryGroup>
-        <VictoryAxis
-          tickValues={[1, 2, 3, 4, 5]}
-          tickFormat={props.assignment}
-          tickLabelComponent={<VictoryLabel angle={40} textAnchor="start" />}
+        <VictoryLine
+          style={{
+            data: { stroke: "#f2ba0d" },
+          }}
+          labelComponent={<VictoryTooltip />}
+          data={allStudentsRatingAverage}
+          x="Assignment"
+          y="DifficultyRate"
         />
-        <VictoryAxis dependentAxis />
-      </VictoryChart>
 
-      <h2>Enjoyment Rating</h2>
-      <VictoryChart
-        domainPadding={6}
-        width={1200}
-        height={400}
-        padding={{ top: 20, bottom: 160, left: 60, right: 150 }}
-      >
-        <VictoryGroup offset={8}>
-          <VictoryBar
-            labelComponent={<VictoryTooltip />}
-            data={fetchData}
-            x="assignment"
-            y="enjoymentRating"
-            tickValues={[1, 2, 3, 4, 5]}
-            alignment="start"
-            color="#F27F0D"
-          />
-        </VictoryGroup>
+        <VictoryLine
+          style={{
+            data: { stroke: "#F27F0D" },
+          }}
+          labelComponent={<VictoryTooltip />}
+          data={allStudentsRatingAverage}
+          x="Assignment"
+          y="EnjoymentRate"
+        />
+
         <VictoryAxis
           tickValues={[1, 2, 3, 4, 5]}
-          tickFormat={props.assignment}
           tickLabelComponent={<VictoryLabel angle={40} textAnchor="start" />}
         />
         <VictoryAxis dependentAxis />
