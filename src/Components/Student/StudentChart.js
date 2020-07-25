@@ -12,7 +12,8 @@ import {
 function StudentChart(props) {
   const apiUrl = "https://dashboard-e5b12.firebaseio.com/subDB.json";
   const [data, setData] = useState();
-  const [toggleTrueFales, setToggleTrueFales] = useState(true);
+  const [difficultyOnOFF, setDifficultyOnOFF] = useState(false);
+  const [enjoymentRateOnOFF, setEnjoymentRateOnOFF] = useState(false);
   const [showDifficultyRateChart, setShowDifficultyRateChart] = useState(true);
   const [showEnjoymentRateChart, setShowEnjoymentRateChart] = useState(true);
 
@@ -67,19 +68,22 @@ function StudentChart(props) {
     Fun: getAverageResult(Assignment, "Fun"),
   }));
 
-  const toggle = () => {
-    setToggleTrueFales(!toggleTrueFales);
+  const toggleDifficultyButton = () => {
+    setDifficultyOnOFF(!difficultyOnOFF);
+  };
+  const toggleEnjoymentButton = () => {
+    setEnjoymentRateOnOFF(!enjoymentRateOnOFF);
   };
 
   const handleChangeDifficultyRate = (event) => {
     event.preventDefault();
-    toggle();
+    toggleDifficultyButton();
     setShowDifficultyRateChart(!showDifficultyRateChart);
   };
 
   const handleChangeEnjoymentRate = (event) => {
     event.preventDefault();
-    toggle();
+    toggleEnjoymentButton();
     setShowEnjoymentRateChart(!showEnjoymentRateChart);
   };
 
@@ -90,22 +94,22 @@ function StudentChart(props) {
           {/* <span className="card-title">Indiviual</span> */}
 
           <button
-            id="DifficultyRate"
-            value="DifficultyRate"
-            onClick={(event) => handleChangeDifficultyRate(event)}
-          >
-            Difficulty Rating |{" "}
-            {toggleTrueFales ? <span>On</span> : <span>Off</span>}
-          </button>
+          id="DifficultyRate"
+          value="DifficultyRate"
+          onClick={(event) => handleChangeDifficultyRate(event)}
+        >
+          Filter: Difficulty Rating |{" "}
+          {difficultyOnOFF ? <span>On</span> : <span>Off</span>}
+        </button>
 
-          <button
-            id="EnjoymentRate"
-            value="EnjoymentRate"
-            onClick={(event) => handleChangeEnjoymentRate(event)}
-          >
-            EnjoymentRating |{" "}
-            {toggleTrueFales ? <span>On</span> : <span>Off</span>}
-          </button>
+        <button
+          id="EnjoymentRate"
+          value="EnjoymentRate"
+          onClick={(event) => handleChangeEnjoymentRate(event)}
+        >
+          Filter: EnjoymentRating |{" "}
+          {enjoymentRateOnOFF ? <span>On</span> : <span>Off</span>}
+        </button>
 
           <VictoryChart
             domainPadding={6}

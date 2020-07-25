@@ -19,9 +19,7 @@ function Navbar(props) {
         <Link to="/" className="brand-logo">
           Dashboard
         </Link>
-          {/* <Link to="/Students">
-            <li>Students</li>
-          </Link> */}
+
         {links}
       </div>
     </nav>

@@ -11,27 +11,24 @@ import {
 
 function AverageRating(props) {
   const [data, setData] = useState(props.data);
-  const [toggleTrueFales, setToggleTrueFales] = useState(false);
-  const [filterDifficulty, setFilterDifficulty] = useState("");
-  const [filterEnjoymentRate, setFilterEnjoymentRate] = useState("");
-  const [filterChart, setFilterChart] = useState("");
+
+  const [difficultyOnOFF, setDifficultyOnOFF] = useState(false);
+  const [enjoymentRateOnOFF, setEnjoymentRateOnOFF] = useState(false);
+  const [chartOnOff, setChartOnOff] = useState(false);
   const [showDifficultyRateChart, setShowDifficultyRateChart] = useState(true);
   const [showEnjoymentRateChart, setShowEnjoymentRateChart] = useState(true);
   const [showLineChart, setShowLineChart] = useState(true);
 
-  
   const allAssignments = data.map((data) => data.assignment);
   const filterAssignmentName = [...new Set(allAssignments)];
-
 
   const objectStateData = data.map((object) => ({
     Name: object.name,
     Assignment: object.assignment,
-    DifficultyRate: parseInt(object.difficultyRating), 
+    DifficultyRate: parseInt(object.difficultyRating),
     EnjoymentRate: parseInt(object.enjoymentRating),
   }));
 
-  
   const getAverageResult = (assignment, typeOfResult) => {
     const filterData = objectStateData
       .filter((item) => item.Assignment === assignment)
@@ -42,32 +39,38 @@ function AverageRating(props) {
     return averageResult;
   };
 
-
   const allStudentsRatingAverage = filterAssignmentName.map((assignment) => ({
     Assignment: assignment,
     DifficultyRate: getAverageResult(assignment, "DifficultyRate"),
     EnjoymentRate: getAverageResult(assignment, "EnjoymentRate"),
   }));
 
-  const toggle = () => {
-    setToggleTrueFales(!toggleTrueFales);
+  const toggleDifficultyButton = () => {
+    setDifficultyOnOFF(!difficultyOnOFF);
+  };
+  const toggleEnjoymentButton = () => {
+    setEnjoymentRateOnOFF(!enjoymentRateOnOFF);
+  };
+
+  const toggleChartButton = () => {
+    setChartOnOff(!chartOnOff);
   };
 
   const handleChangeDifficultyRate = (event) => {
     event.preventDefault();
-    toggle();
+    toggleDifficultyButton();
     setShowDifficultyRateChart(!showDifficultyRateChart);
   };
 
   const handleChangeEnjoymentRate = (event) => {
     event.preventDefault();
-    toggle();
+    toggleEnjoymentButton();
     setShowEnjoymentRateChart(!showEnjoymentRateChart);
   };
 
-  const handleChangeChart = (event) => {
+  const handleChangeLineChart = (event) => {
     event.preventDefault();
-    toggle();
+    toggleChartButton();
     setShowLineChart(!showLineChart);
   };
 
@@ -157,8 +160,8 @@ function AverageRating(props) {
           value="DifficultyRate"
           onClick={(event) => handleChangeDifficultyRate(event)}
         >
-          Difficulty Rating |{" "}
-          {toggleTrueFales ? <span>On</span> : <span>Off</span>}
+          Filter: Difficulty Rating |{" "}
+          {difficultyOnOFF ? <span>On</span> : <span>Off</span>}
         </button>
 
         <button
@@ -166,12 +169,12 @@ function AverageRating(props) {
           value="EnjoymentRate"
           onClick={(event) => handleChangeEnjoymentRate(event)}
         >
-          EnjoymentRating |{" "}
-          {toggleTrueFales ? <span>On</span> : <span>Off</span>}
+          Filter: EnjoymentRating |{" "}
+          {enjoymentRateOnOFF ? <span>On</span> : <span>Off</span>}
         </button>
 
-        <button onClick={(event) => handleChangeChart(event)}>
-          Chart | {toggleTrueFales ? <span>Bar</span> : <span>Chart</span>}
+        <button onClick={(event) => handleChangeLineChart(event)}>
+          Set Chart mode | {chartOnOff ? <span>Bar</span> : <span>Chart</span>}
         </button>
       </div>
       <h2>Average Rating</h2>

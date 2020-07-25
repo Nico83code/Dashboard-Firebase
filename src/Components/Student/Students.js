@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "../../App.css";
 
 function Students(props) {
   const apiUrl = "https://dashboard-e5b12.firebaseio.com/subDB.json";
@@ -34,11 +35,15 @@ function Students(props) {
       <div className="card z-depth-0">
         <div className="card-content">
           <span className="card-title">Students</span>
-          {newData.map((props) => (
-            <div key={props.id}>
-              <Link to={`/Students/${props.name}`}>{props.name}</Link>
-            </div>
-          ))}
+          <div>
+            {newData.map((props) => (
+              <div className="inline" key={props.id}>
+                <button className=" white-text, waves-effect waves-light btn blue ">
+                  <Link to={`/Students/${props.name}`}>{props.name}</Link>
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
