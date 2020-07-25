@@ -23,16 +23,12 @@ function Students(props) {
 
   if (!data) return "loading";
 
-  // step 1 Array.from(new Set()) going to make a new set and I want to turn back in an array with Array.from
-  // Step 2 new Set will only allow unique values in it
-  // Step 3 .map(Name => [...]) run map function to return the actual data
   const newData = Array.from(new Set(data.map((item) => item.name))).map(
     (Name) => {
       return data.find((item) => item.name === Name);
     }
   );
 
-  console.log(newData);
   return (
     <div className="dbcontainer">
       <div className="card z-depth-0">

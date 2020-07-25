@@ -8,7 +8,6 @@ function StudentDetail(props) {
       <div className="card z-depth-0">
         <div className="card-content">
           <span className="card-title">Student {props.match.params.id} </span>
-          {/* <span className="card-title">Result {props.match.params.id} Yellow=Fun Blue=Difficulty</span> */}
           <StudentChart newNames={props.match.params.id} />
         </div>
       </div>
