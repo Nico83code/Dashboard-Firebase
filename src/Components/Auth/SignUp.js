@@ -49,7 +49,7 @@ function SignUp(props) {
           <input type="text" id="lastName" onChange={handleInput} />
         </div>
         <div className="input-field">
-          <button className="btn pink lighten-1 z-depth-0">Sign up</button>
+          <button className="btn blue lighten-1 z-depth-0">Sign up</button>
         </div>
         <div className="red-text center">
           {authError ? <p>{authError}</p> : null}

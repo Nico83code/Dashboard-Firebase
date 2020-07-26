@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { createProject } from "../../Store/actions/projectActions";
 import { Redirect } from "react-router-dom";
 
-const CreateProject = (props) => {
+const CreatePost = (props) => {
   const Form = {
     title: "",
     content: "",
@@ -37,11 +37,11 @@ const CreateProject = (props) => {
           <input type="text" id="title" onChange={handleChange} />
         </div>
         <div className="input-field">
-          <label htmlFor="content">Project Content</label>
+          <label htmlFor="content">Post Content</label>
           <textarea id="content" onChange={handleChange} />
         </div>
         <div className="input-field">
-          <button className="btn pink lighten-1 z-depth-0">Create</button>
+          <button className="btn blue lighten-1 z-depth-0">Create</button>
         </div>
       </form>
     </div>
@@ -60,4 +60,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProject);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);

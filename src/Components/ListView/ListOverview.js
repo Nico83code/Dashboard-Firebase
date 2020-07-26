@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 import ListCard from "./ListCard";
 import "../../App.css";
 
-function ListOverview() {
+function ListOverview(props) {
   const apiUrl = "https://dashboard-e5b12.firebaseio.com/subDB.json";
   const [subData, setSubData] = useState();
   const [sorting, setSorting] = useState("All");
@@ -23,6 +27,9 @@ function ListOverview() {
   useEffect((event) => {
     getSubData(event);
   }, []);
+
+  const { auth } = props;
+  if (!auth.uid) return <Redirect to="/signin" />;
 
   if (!subData) return "loading";
 
@@ -126,4 +133,14 @@ function ListOverview() {
     </div>
   );
 }
-export default ListOverview;
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect()
+)(ListOverview);

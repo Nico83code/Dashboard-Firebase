@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 import {
   VictoryBar,
   VictoryChart,
@@ -11,13 +15,15 @@ import {
 
 function AverageRating(props) {
   const [data, setData] = useState(props.data);
-
   const [difficultyOnOFF, setDifficultyOnOFF] = useState(false);
   const [enjoymentRateOnOFF, setEnjoymentRateOnOFF] = useState(false);
   const [chartOnOff, setChartOnOff] = useState(false);
   const [showDifficultyRateChart, setShowDifficultyRateChart] = useState(true);
   const [showEnjoymentRateChart, setShowEnjoymentRateChart] = useState(true);
   const [showLineChart, setShowLineChart] = useState(true);
+
+  const {auth} = props;
+  if (!auth.uid) return <Redirect to="/signin" />
 
   const allAssignments = data.map((data) => data.assignment);
   const filterAssignmentName = [...new Set(allAssignments)];
@@ -155,7 +161,8 @@ function AverageRating(props) {
   return (
     <div>
       <div>
-        <button
+        <button 
+        className="DifficultyRate white-text, waves-effect waves-light btn "
           id="DifficultyRate"
           value="DifficultyRate"
           onClick={(event) => handleChangeDifficultyRate(event)}
@@ -165,6 +172,7 @@ function AverageRating(props) {
         </button>
 
         <button
+        className="EnjoymentRate white-text, waves-effect waves-light btn "
           id="EnjoymentRate"
           value="EnjoymentRate"
           onClick={(event) => handleChangeEnjoymentRate(event)}
@@ -173,7 +181,8 @@ function AverageRating(props) {
           {enjoymentRateOnOFF ? <span>On</span> : <span>Off</span>}
         </button>
 
-        <button onClick={(event) => handleChangeLineChart(event)}>
+        <button className="Chart white-text, waves-effect waves-light btn "
+        onClick={(event) => handleChangeLineChart(event)}>
           Set Chart mode | {chartOnOff ? <span>Bar</span> : <span>Chart</span>}
         </button>
       </div>
@@ -183,4 +192,14 @@ function AverageRating(props) {
     </div>
   );
 }
-export default AverageRating;
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect()
+)(AverageRating);

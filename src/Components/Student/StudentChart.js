@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 
 import {
   VictoryBar,
@@ -10,12 +14,14 @@ import {
 } from "victory";
 
 function StudentChart(props) {
-  const apiUrl = "https://dashboard-e5b12.firebaseio.com/subDB.json";
+const apiUrl = "https://dashboard-e5b12.firebaseio.com/subDB.json";
   const [data, setData] = useState();
   const [difficultyOnOFF, setDifficultyOnOFF] = useState(false);
   const [enjoymentRateOnOFF, setEnjoymentRateOnOFF] = useState(false);
   const [showDifficultyRateChart, setShowDifficultyRateChart] = useState(true);
   const [showEnjoymentRateChart, setShowEnjoymentRateChart] = useState(true);
+
+ 
 
   const getData = async () => {
     try {
@@ -33,23 +39,25 @@ function StudentChart(props) {
     getData(event);
   }, []);
 
+  const {auth} = props;
+  if (!auth.uid) return <Redirect to="/signin" />
+  
   if (!data) return "loading";
 
   const allAssignments = data.map((data) => data.assignment);
-  const allUniqueAssignments = [...new Set(allAssignments)];
- 
+  // const allUniqueAssignments = [...new Set(allAssignments)];
+
   const objectStateData = data.map((object) => ({
     Name: object.name,
     Assignment: object.assignment,
-    Difficulty: parseInt(object.difficultyRating), 
-    Fun: parseInt(object.enjoymentRating),
+    Difficulty: parseInt(object.difficultyRating),
+    EnjoymentRate: parseInt(object.enjoymentRating),
   }));
- 
+
   const DataIndividualStudent = objectStateData.filter(
     (item) => item.Name === props.newNames
   );
   console.log(DataIndividualStudent);
-
 
   const getAverageResult = (Assignment, typeOfResult) => {
     const filterData = objectStateData
@@ -57,16 +65,15 @@ function StudentChart(props) {
       .map((result) => result[typeOfResult]);
     // Average
     const averageResult =
-      filterData.reduce((a, b) => a + b, 0) / filterData.length; 
+      filterData.reduce((a, b) => a + b, 0) / filterData.length;
     return averageResult;
   };
 
-  
-  const allStudentsRatingAverage = allUniqueAssignments.map((Assignment) => ({
-    Assignment: Assignment,
-    Difficulty: getAverageResult(Assignment, "Difficulty"),
-    Fun: getAverageResult(Assignment, "Fun"),
-  }));
+  // const allStudentsRatingAverage = allUniqueAssignments.map((Assignment) => ({
+  //   Assignment: Assignment,
+  //   DifficultyRate: getAverageResult(Assignment, "DifficultyRate"),
+  //   EnjoymentRate: getAverageResult(Assignment, "EnjoymentRate"),
+  // }));
 
   const toggleDifficultyButton = () => {
     setDifficultyOnOFF(!difficultyOnOFF);
@@ -94,22 +101,24 @@ function StudentChart(props) {
           {/* <span className="card-title">Indiviual</span> */}
 
           <button
-          id="DifficultyRate"
-          value="DifficultyRate"
-          onClick={(event) => handleChangeDifficultyRate(event)}
-        >
-          Filter: Difficulty Rating |{" "}
-          {difficultyOnOFF ? <span>On</span> : <span>Off</span>}
-        </button>
+            className="DifficultyRate white-text, waves-effect waves-light btn "
+            id="DifficultyRate"
+            value="DifficultyRate"
+            onClick={(event) => handleChangeDifficultyRate(event)}
+          >
+            Filter: Difficulty Rating |{" "}
+            {difficultyOnOFF ? <span>On</span> : <span>Off</span>}
+          </button>
 
-        <button
-          id="EnjoymentRate"
-          value="EnjoymentRate"
-          onClick={(event) => handleChangeEnjoymentRate(event)}
-        >
-          Filter: EnjoymentRating |{" "}
-          {enjoymentRateOnOFF ? <span>On</span> : <span>Off</span>}
-        </button>
+          <button
+            className="EnjoymentRate white-text, waves-effect waves-light btn "
+            id="EnjoymentRate"
+            value="EnjoymentRate"
+            onClick={(event) => handleChangeEnjoymentRate(event)}
+          >
+            Filter: EnjoymentRating |{" "}
+            {enjoymentRateOnOFF ? <span>On</span> : <span>Off</span>}
+          </button>
 
           <VictoryChart
             domainPadding={6}
@@ -136,7 +145,7 @@ function StudentChart(props) {
                   labelComponent={<VictoryTooltip />}
                   data={DataIndividualStudent}
                   x="Assignment"
-                  y="Fun"
+                  y="EnjoymentRate"
                   style={{ data: { fill: "#F27F0D" } }}
                 />
               ) : null}
@@ -155,4 +164,14 @@ function StudentChart(props) {
   );
 }
 
-export default StudentChart;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect()
+)(StudentChart);
+

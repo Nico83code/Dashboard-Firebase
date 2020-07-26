@@ -1,15 +1,15 @@
 import React from "react";
-import ProjectSummary from "./ProjectSummary";
+import PostSummary from "./PostSummary";
 import { Link } from "react-router-dom";
 
-const ProjectList = ({ projects }) => {
+const PostList = ({ projects }) => {
   return (
     <div className="project-list section">
       {projects &&
         projects.map((project) => {
           return (
             <Link to={`./project/${project.id}`} key={project.id}>
-              <ProjectSummary project={project} />
+              <PostSummary project={project} />
             </Link>
           );
         })}
@@ -17,4 +17,4 @@ const ProjectList = ({ projects }) => {
   );
 };
 
-export default ProjectList;
+export default PostList;

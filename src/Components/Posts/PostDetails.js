@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { Redirect } from "react-router-dom";
 import moment from "moment"
 
-function ProjectDetails(props) {
+function PostDetails(props) {
   const { project, auth } = props;
   if (!auth.uid) return <Redirect to="/signin" />;
 
@@ -29,7 +29,7 @@ function ProjectDetails(props) {
   } else {
     return (
       <div className="container center">
-        <p>Loading project...</p>
+        <p>Loading Posts...</p>
       </div>
     );
   }
@@ -49,4 +49,4 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([{ collection: "projects" }])
-)(ProjectDetails);
+)(PostDetails);

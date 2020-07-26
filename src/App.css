@@ -39,3 +39,18 @@ a {
   display: inline-block; 
   margin:10px;
 }
+
+
+.DifficultyRate{
+  background-color: #f2ba0d ;
+  margin:10px;
+}
+
+.EnjoymentRate {
+  background-color: #F27F0D ;
+  margin:10px;
+}
+.Chart {
+  background-color: f2ba0d ;
+  margin:10px;
+}

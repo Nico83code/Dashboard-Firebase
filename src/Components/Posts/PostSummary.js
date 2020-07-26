@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const ProjectSummary = ({ project }) => {
+const PostSummary = ({ project }) => {
   return (
     <div>
       <div className="project-list section">
@@ -20,4 +20,4 @@ const ProjectSummary = ({ project }) => {
     </div>
   );
 };
-export default ProjectSummary;
+export default PostSummary;

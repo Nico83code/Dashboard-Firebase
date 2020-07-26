@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../App.css";
 
@@ -21,6 +25,9 @@ function Students(props) {
   useEffect((event) => {
     getData(event);
   }, []);
+
+  const { auth } = props;
+  if (!auth.uid) return <Redirect to="/signin" />;
 
   if (!data) return "loading";
 
@@ -49,4 +56,11 @@ function Students(props) {
     </div>
   );
 }
-export default Students;
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+
+export default compose(connect(mapStateToProps), firestoreConnect())(Students);

@@ -39,7 +39,7 @@ const SignIn = (props) => {
           <input type="password" id="password" onChange={handleInputChange} />
         </div>
         <div className="input-field">
-          <button className="btn pink lighten-1 z-depth-0">Login</button>
+          <button className="btn blue lighten-1 z-depth-0">Login</button>
         </div>
         <div className="red-text center">
           {authError ? <p>{authError}</p> : null}
