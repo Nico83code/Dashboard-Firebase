@@ -1,0 +1,50 @@
+[debug] [2020-07-27T09:22:20.912Z] ----------------------------------------------------------------------
+[debug] [2020-07-27T09:22:20.915Z] Command:       /Users/nico/.nvm/versions/node/v12.16.3/bin/node /Users/nico/.nvm/versions/node/v12.16.3/bin/firebase init
+[debug] [2020-07-27T09:22:20.916Z] CLI Version:   8.6.0
+[debug] [2020-07-27T09:22:20.916Z] Platform:      darwin
+[debug] [2020-07-27T09:22:20.916Z] Node Version:  v12.16.3
+[debug] [2020-07-27T09:22:20.917Z] Time:          Mon Jul 27 2020 11:22:20 GMT+0200 (Central European Summer Time)
+[debug] [2020-07-27T09:22:20.917Z] ----------------------------------------------------------------------
+[debug] [2020-07-27T09:22:20.917Z] 
+[debug] [2020-07-27T09:22:20.926Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-07-27T09:22:20.926Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/nico/Winc/Week_6/Eindopdracht/student-dashboard-app
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  .firebaserc already has a default project, using dashboard-e5b12. 
+[debug] [2020-07-27T09:23:14.462Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/dashboard-e5b12  
+ 
+[debug] [2020-07-27T09:23:14.697Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 27 Jul 2020 09:23:14 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+=== Database Setup
+[info] 
+[info] Firebase Realtime Database Rules allow you to define how your data should be
+[info] structured and when your data can be read from and written to.
+[info] 
+[debug] [2020-07-27T09:23:37.689Z] Error: EISDIR: illegal operation on a directory, open '/Users/nico/Winc/Week_6/Eindopdracht/student-dashboard-app'
+    at Object.openSync (fs.js:458:3)
+    at Object.writeFileSync (fs.js:1279:35)
+    at Config.writeProjectFile (/Users/nico/.nvm/versions/node/v12.16.3/lib/node_modules/firebase-tools/lib/config.js:155:8)
+    at /Users/nico/.nvm/versions/node/v12.16.3/lib/node_modules/firebase-tools/lib/init/features/database.js:25:23
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+[error] 
+[error] Error: An unexpected error has occurred.
